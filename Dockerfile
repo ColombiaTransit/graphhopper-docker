@@ -14,4 +14,4 @@ EXPOSE 8989
 
 HEALTHCHECK --interval=5s --timeout=3s CMD curl --fail http://localhost:8989/health || exit 1
 
-CMD ["java", "-Xmx2G", "-jar", "/srv/graphhopper/graphhopper-web-7.0.jar", "server", "config-colombia.yml"]
+CMD ["java", "-Xmx3G", "-jar", "/srv/graphhopper/graphhopper-web-7.0.jar", "server", "config-colombia.yml"]

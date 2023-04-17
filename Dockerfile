@@ -9,5 +9,12 @@ RUN cd /srv/graphhopper
 
 RUN wget -O - http://download.geofabrik.de/south-america/colombia-latest.osm.pbf
 
-EXPOSE 2322
-CMD ["java", "-Xmx8G", "-jar", "graphhopper*.jar", "server", "config-colombia.yml"" ]
+COPY config-colombia.yml ./
+
+RUN sed -i '/^ *bind_host/s/^ */&# /p' config-colombia.yml
+
+EXPOSE 8989
+
+HEALTHCHECK --interval=5s --timeout=3s CMD curl --fail http://localhost:8989/health || exit 1
+
+CMD ["java", "-Xmx2G", "-jar", "graphhopper*.jar", "server", "config-colombia.yml"" ]

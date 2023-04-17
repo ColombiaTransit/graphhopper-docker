@@ -2,12 +2,9 @@ FROM eclipse-temurin:11
 RUN mkdir -p /srv/graphhopper
 
 ADD https://repo1.maven.org/maven2/com/graphhopper/graphhopper-web/7.0/graphhopper-web-7.0.jar /srv/graphhopper
-
-# ADD https://download1.graphhopper.com/public/extracts/by-country-code/co/photon-db-co-latest.tar.bz2 /srv/photon
+ADD http://download.geofabrik.de/south-america/colombia-latest.osm.pbf /srv/graphhopper
 
 RUN cd /srv/graphhopper
-
-RUN wget -O - http://download.geofabrik.de/south-america/colombia-latest.osm.pbf
 
 COPY config-colombia.yml ./
 

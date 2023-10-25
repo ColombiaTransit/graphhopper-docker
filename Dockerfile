@@ -1,4 +1,4 @@
-FROM eclipse-temurin:11
+FROM eclipse-temurin:21
 RUN mkdir -p /srv/graphhopper
 
 ADD https://repo1.maven.org/maven2/com/graphhopper/graphhopper-web/8.0/graphhopper-web-8.0.jar /srv/graphhopper

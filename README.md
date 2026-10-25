@@ -5,7 +5,7 @@ Docker-image voor [GraphHopper](https://github.com/graphhopper/graphhopper) met 
 Wordt gebruikt om gereconstrueerde busritten (gtfs-redbus) te valideren: route, afstand en
 reistijd tussen opeenvolgende haltes.
 
-- GraphHopper **11.0** (Java 21). Andere versie: build-argument `GH_VERSION`.
+- GraphHopper **11.1** (Java 21). Andere versie: build-argument `GH_VERSION`.
 - Profielen `car` en `bus` (custom model `bus.json` van GraphHopper), beide met Contraction
   Hierarchies.
 - OSM-data en graaf staan in het volume `/data`, niet in het image. Bij de eerste start wordt
@@ -14,7 +14,7 @@ reistijd tussen opeenvolgende haltes.
 
 ```bash
 docker compose up -d
-docker compose logs -f graphhopper      # wachten op "GraphHopper 11.0 starten"
+docker compose logs -f graphhopper      # wachten op "GraphHopper 11.1 starten"
 curl "http://localhost:8989/route?profile=bus&point=8.7509,-75.8787&point=10.4236,-75.5253&points_encoded=false"
 ```
 

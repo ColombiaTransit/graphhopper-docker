@@ -5,7 +5,7 @@
 # direct. Nieuwe OSM-data: FORCE_IMPORT=true (bouwt in een tijdelijke map en wisselt dan om).
 FROM eclipse-temurin:21-jre
 
-ARG GH_VERSION=11.0
+ARG GH_VERSION=11.1
 ENV GH_VERSION=${GH_VERSION}
 
 RUN apt-get update \

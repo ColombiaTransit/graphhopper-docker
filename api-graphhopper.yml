@@ -1,0 +1,25 @@
+http:
+
+  ## GraphHopper via apiv2.colombiatransit.co/api/graphhopper ##
+  routers:
+    api-graphhopper:
+      entryPoints:
+        - web
+      rule: "Host(`apiv2.colombiatransit.co`) && PathPrefix(`/api/graphhopper`)"
+      service: graphhopper@docker
+      middlewares:
+        - api-graphhopper@file
+
+  ## MIDDLEWARES ##
+  middlewares:
+    api-graphhopper:
+      chain:
+        middlewares:
+          - default-headers
+          - real-ip
+          - cleanup-graphhopper-request
+    # /api/graphhopper/route?... -> /route?...
+    cleanup-graphhopper-request:
+      stripPrefix:
+        prefixes:
+          - "/api/graphhopper"

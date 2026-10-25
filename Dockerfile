@@ -1,17 +1,33 @@
-FROM eclipse-temurin:21
-RUN mkdir -p /srv/graphhopper
+# GraphHopper (routeplanner) voor Colombia, met de Geofabrik-export.
+#
+# OSM-data en graaf zitten NIET in het image: bij de eerste start downloadt de container de
+# Colombia-export van Geofabrik en bouwt de graaf in /data (een volume). Daarna start hij
+# direct. Nieuwe OSM-data: FORCE_IMPORT=true (bouwt in een tijdelijke map en wisselt dan om).
+FROM eclipse-temurin:21-jre
 
-ADD https://repo1.maven.org/maven2/com/graphhopper/graphhopper-web/8.0/graphhopper-web-8.0.jar /srv/graphhopper
-ADD http://download.geofabrik.de/south-america/colombia-latest.osm.pbf /srv/graphhopper
+ARG GH_VERSION=11.0
+ENV GH_VERSION=${GH_VERSION}
 
-RUN cd /srv/graphhopper
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends wget ca-certificates \
+ && rm -rf /var/lib/apt/lists/* \
+ && mkdir -p /graphhopper /data \
+ && wget -q -O /graphhopper/graphhopper-web.jar \
+      "https://repo1.maven.org/maven2/com/graphhopper/graphhopper-web/${GH_VERSION}/graphhopper-web-${GH_VERSION}.jar"
 
-COPY config-colombia.yml ./
+COPY config-colombia.yml /graphhopper/config-colombia.yml
+COPY entrypoint.sh /graphhopper/entrypoint.sh
+RUN chmod +x /graphhopper/entrypoint.sh
 
-RUN sed -i '/^ *bind_host/s/^ */&# /p' config-colombia.yml
-
+WORKDIR /graphhopper
+VOLUME ["/data"]
 EXPOSE 8989
 
-HEALTHCHECK --interval=5s --timeout=3s CMD curl --fail http://localhost:8989/health || exit 1
+ENV JAVA_OPTS="-Xmx6G" \
+    PBF_URL="https://download.geofabrik.de/south-america/colombia-latest.osm.pbf" \
+    FORCE_IMPORT="false"
 
-CMD ["java", "-Xmx3G", "-jar", "/srv/graphhopper/graphhopper-web-8.0.jar", "server", "config-colombia.yml"]
+HEALTHCHECK --interval=60s --timeout=10s --start-period=60m --retries=3 \
+  CMD wget -q -O /dev/null "http://127.0.0.1:8989/health" || exit 1
+
+ENTRYPOINT ["/graphhopper/entrypoint.sh"]

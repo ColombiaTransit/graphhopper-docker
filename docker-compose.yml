@@ -1,0 +1,28 @@
+# GraphHopper voor Colombia (Geofabrik-export).
+#
+#   docker compose up -d              # eerste start: download + graaf bouwen, daarna server op :8989
+#   docker compose logs -f graphhopper
+#
+# Nieuwe OSM-data: FORCE_IMPORT=true docker compose up -d graphhopper (daarna weer zonder).
+# Via Traefik: zie api-graphhopper.yml (zelfde opbouw als api-pelias/api-photon).
+services:
+  graphhopper:
+    image: mvanlaar/graphhopper:latest
+    restart: unless-stopped
+    environment:
+      JAVA_OPTS: "-Xmx6G"
+      FORCE_IMPORT: "${FORCE_IMPORT:-false}"
+    volumes:
+      - graphhopper-data:/data
+    networks:
+      - traefik
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.graphhopper.loadbalancer.server.port=8989
+
+volumes:
+  graphhopper-data:
+
+networks:
+  traefik:
+    external: true

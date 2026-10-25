@@ -4,7 +4,7 @@
 #   docker compose logs -f graphhopper
 #
 # Nieuwe OSM-data: FORCE_IMPORT=true docker compose up -d graphhopper (daarna weer zonder).
-# Via Traefik: zie api-graphhopper.yml (zelfde opbouw als api-pelias/api-photon).
+
 services:
   graphhopper:
     image: mvanlaar/graphhopper:latest

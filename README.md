@@ -18,6 +18,4 @@ docker compose logs -f graphhopper      # wachten op "GraphHopper 11.1 starten"
 curl "http://localhost:8989/route?profile=bus&point=8.7509,-75.8787&point=10.4236,-75.5253&points_encoded=false"
 ```
 
-Via Traefik (`api-graphhopper.yml`): `https://apiv2.colombiatransit.co/api/graphhopper/route?...`
-
 Geheugen: `JAVA_OPTS=-Xmx6G` is ruim voor Colombia met twee CH-profielen.

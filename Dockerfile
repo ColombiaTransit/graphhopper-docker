@@ -13,7 +13,7 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/* \
  && mkdir -p /graphhopper /data \
  && wget -q -O /graphhopper/graphhopper-web.jar \
-      "https://repo1.maven.org/maven2/com/graphhopper/graphhopper-web/${GH_VERSION}/graphhopper-web-${GH_VERSION}.jar"
+      "https://github.com/graphhopper/graphhopper/releases/download/${GH_VERSION}/graphhopper-web-${GH_VERSION}.jar"
 
 COPY config-colombia.yml /graphhopper/config-colombia.yml
 COPY entrypoint.sh /graphhopper/entrypoint.sh

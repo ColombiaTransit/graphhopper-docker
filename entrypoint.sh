@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Downloadt de OSM-export en bouwt de graaf als die er nog niet is (of FORCE_IMPORT=true),
+# Downloadt de OSM-export en bouwt de graph als die er nog niet is (of FORCE_IMPORT=true),
 # en start daarna de server.
 set -euo pipefail
 cd /graphhopper
@@ -10,8 +10,8 @@ if [ "${FORCE_IMPORT}" = "true" ] || [ ! -f "$GRAPH/properties" ]; then
   echo "== GraphHopper ${GH_VERSION}: OSM-data downloaden: ${PBF_URL}"
   wget -q -O "$PBF.tmp" "${PBF_URL}"
   mv -f "$PBF.tmp" "$PBF"
-  echo "== Graaf bouwen (kan een tijd duren)"
-  # In een tijdelijke map bouwen en daarna omwisselen: nooit over een werkende graaf heen.
+  echo "== Graph bouwen (kan een tijd duren)"
+  # In een tijdelijke map bouwen en daarna omwisselen: nooit over een werkende graph heen.
   rm -rf "$GRAPH.new"
   java ${JAVA_OPTS} -Ddw.graphhopper.datareader.file="$PBF" -Ddw.graphhopper.graph.location="$GRAPH.new" \
     -jar graphhopper-web.jar import config-colombia.yml
@@ -19,7 +19,7 @@ if [ "${FORCE_IMPORT}" = "true" ] || [ ! -f "$GRAPH/properties" ]; then
   [ -d "$GRAPH" ] && mv "$GRAPH" "$GRAPH.old"
   mv "$GRAPH.new" "$GRAPH"
   rm -rf "$GRAPH.old"
-  echo "== Graaf klaar"
+  echo "== Graph klaar"
 fi
 
 echo "== GraphHopper ${GH_VERSION} starten op poort 8989"

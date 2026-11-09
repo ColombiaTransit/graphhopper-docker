@@ -1,7 +1,7 @@
 # GraphHopper (routeplanner) voor Colombia, met de Geofabrik-export.
 #
-# OSM-data en graaf zitten NIET in het image: bij de eerste start downloadt de container de
-# Colombia-export van Geofabrik en bouwt de graaf in /data (een volume). Daarna start hij
+# OSM-data en graph zitten NIET in het image: bij de eerste start downloadt de container de
+# Colombia-export van Geofabrik en bouwt de graph in /data (een volume). Daarna start hij
 # direct. Nieuwe OSM-data: FORCE_IMPORT=true (bouwt in een tijdelijke map en wisselt dan om).
 FROM eclipse-temurin:21-jre
 

@@ -8,8 +8,8 @@ reistijd tussen opeenvolgende haltes.
 - GraphHopper **11.1** (Java 21). Andere versie: build-argument `GH_VERSION`.
 - Profielen `car` en `bus` (custom model `bus.json` van GraphHopper), beide met Contraction
   Hierarchies.
-- OSM-data en graaf staan in het volume `/data`, niet in het image. Bij de eerste start wordt
-  de export gedownload (`PBF_URL`) en de graaf gebouwd; daarna start de server direct.
+- OSM-data en graph staan in het volume `/data`, niet in het image. Bij de eerste start wordt
+  de export gedownload (`PBF_URL`) en de graph gebouwd; daarna start de server direct.
   Nieuwe data: `FORCE_IMPORT=true` (bouwt in een tijdelijke map en wisselt dan om).
 
 ```bash

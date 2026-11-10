@@ -4,14 +4,16 @@ graphhopper:
   datareader.file: ""
   graph.location: /data/graph-cache
 
-  # Profielen: car (standaard) en bus (custom model van GraphHopper: zware/brede voertuigen,
-  # alleen wegen waar bussen mogen, 90% van de autosnelheid). Bus wordt gebruikt om
-  # gereconstrueerde busritten te valideren (afstand/reistijd tussen haltes).
+  # Profielen: car (standaard) en bus (custom_models/bus_colombia.json: bus.json van GraphHopper
+  # plus veerponten en tracks; zware/brede voertuigen, 90% van de autosnelheid). Bus wordt
+  # gebruikt om gereconstrueerde busritten te valideren en voor de shapes in de GTFS.
+  # Let op: een wijziging in een profiel vraagt een nieuwe graph (FORCE_IMPORT=true).
+  custom_models.directory: custom_models
   profiles:
     - name: car
       custom_model_files: [car.json]
     - name: bus
-      custom_model_files: [bus.json]
+      custom_model_files: [bus_colombia.json]
 
   # Snelle modus (Contraction Hierarchies) voor beide profielen
   profiles_ch:

@@ -6,7 +6,7 @@ Wordt gebruikt om gereconstrueerde busritten (gtfs-redbus) te valideren: route, 
 reistijd tussen opeenvolgende haltes.
 
 - GraphHopper **11.1** (Java 21). Andere versie: build-argument `GH_VERSION`.
-- Profielen `car` en `bus` (custom model `bus.json` van GraphHopper), beide met Contraction
+- Profielen `car` en `bus` (custom model `custom_models/bus_colombia.json`: `bus.json` van GraphHopper plus veerponten en `highway=track`), beide met Contraction
   Hierarchies.
 - OSM-data en graph staan in het volume `/data`, niet in het image. Bij de eerste start wordt
   de export gedownload (`PBF_URL`) en de graph gebouwd; daarna start de server direct.

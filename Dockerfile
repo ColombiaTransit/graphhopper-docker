@@ -16,6 +16,7 @@ RUN apt-get update \
       "https://github.com/graphhopper/graphhopper/releases/download/${GH_VERSION}/graphhopper-web-${GH_VERSION}.jar"
 
 COPY config-colombia.yml /graphhopper/config-colombia.yml
+COPY custom_models /graphhopper/custom_models
 COPY entrypoint.sh /graphhopper/entrypoint.sh
 RUN chmod +x /graphhopper/entrypoint.sh
 

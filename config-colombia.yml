@@ -5,7 +5,7 @@ graphhopper:
   graph.location: /data/graph-cache
 
   # Profielen: car (standaard) en bus (custom_models/bus_colombia.json: bus.json van GraphHopper
-  # plus veerponten en tracks; zware/brede voertuigen, 90% van de autosnelheid). Bus wordt
+  # plus veerponten (car_access) en tracks; zware/brede voertuigen, 90% van de autosnelheid). Bus wordt
   # gebruikt om gereconstrueerde busritten te valideren en voor de shapes in de GTFS.
   # Let op: een wijziging in een profiel vraagt een nieuwe graph (FORCE_IMPORT=true).
   custom_models.directory: custom_models

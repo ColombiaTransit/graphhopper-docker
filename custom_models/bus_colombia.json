@@ -1,8 +1,10 @@
 // Busprofiel voor Colombia, gebaseerd op bus.json van GraphHopper 11.
 // Verschillen met het origineel:
-//  - veerponten (road_environment == FERRY) zijn toegestaan als bus_access dat toelaat
-//    (route=ferry met motor_vehicle=yes, bv. Morales - Moralito); in bus.json vallen ze in de
-//    'else' omdat een veerpont geen road_class uit de lijst heeft;
+//  - veerponten (road_environment == FERRY) zijn toegestaan als een auto erover mag (car_access).
+//    In bus.json vallen ze in de 'else' omdat een veerpont geen road_class uit de lijst heeft, en
+//    bus_access is op een veerpont alleen waar bij expliciet bus/psv/motor_vehicle/vehicle/access=yes;
+//    veel ponten over de Magdalena hebben dat niet (bv. Puerto Wilches - Cantagallo). Op die routes
+//    rijden busjes voor 9-20 personen, die mee kunnen waar een auto mee kan;
 //  - highway=track is toegestaan (priority 0.7): veel onverharde verbindingswegen op het platteland
 //    waar wel bussen rijden, zijn in OSM als track getagd.
 {
@@ -11,7 +13,7 @@
     { "if": "road_access == PRIVATE", "multiply_by": "0" },
     { "if": "road_access == DESTINATION", "multiply_by": "0.1" },
     { "if": "max_weight < 5 || max_width < 3 || max_height < 4", "multiply_by": "0" },
-    { "if": "bus_access && road_environment == FERRY", "multiply_by": "1" },
+    { "if": "car_access && road_environment == FERRY", "multiply_by": "1" },
     { "else_if": "bus_access && (road_class == BUSWAY || road_class == MOTORWAY || road_class == TRUNK || road_class == PRIMARY || road_class == SECONDARY || road_class == TERTIARY || road_class == UNCLASSIFIED || road_class == LIVING_STREET || road_class == RESIDENTIAL || road_class == SERVICE || road_class == ROAD)",
       "multiply_by": "1"
     },

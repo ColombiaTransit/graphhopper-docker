@@ -6,7 +6,13 @@
 //    veel ponten over de Magdalena hebben dat niet (bv. Puerto Wilches - Cantagallo). Op die routes
 //    rijden busjes voor 9-20 personen, die mee kunnen waar een auto mee kan;
 //  - highway=track is toegestaan (priority 0.7): veel onverharde verbindingswegen op het platteland
-//    waar wel bussen rijden, zijn in OSM als track getagd.
+//    waar wel bussen rijden, zijn in OSM als track getagd;
+//  - busbanen krijgen een eigen snelheid (40 km/u). bus.json leidt de snelheid af van
+//    car_average_speed, maar op een busbaan mogen geen auto's: bij highway=busway is die snelheid 0
+//    (dus 10 km/u), en bij busbanen die als highway=service + access=no + bus=designated getagd zijn
+//    (zoals de troncal van Transcaribe in Cartagena) is het de service-snelheid van 20 km/u (dus 18).
+//    40 km/u is de rijsnelheid tussen stations; optrekken, afremmen en halteren zitten in de
+//    dienstregeling, niet in de route.
 {
   "distance_influence": 90,
   "priority": [
@@ -21,7 +27,8 @@
     { "else": "", "multiply_by": "0" }
   ],
   "speed": [
-    { "if": "bus_access && car_average_speed < 10", "limit_to": "10" },
+    { "if": "bus_access && (road_class == BUSWAY || (road_class == SERVICE && !car_access))", "limit_to": "40" },
+    { "else_if": "bus_access && car_average_speed < 10", "limit_to": "10" },
     { "else": "", "limit_to": "car_average_speed * 0.9" },
     { "if": "true", "limit_to": "100" }
   ]
